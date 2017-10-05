@@ -1,0 +1,1 @@
+"use strict";var aboutController=function(){function t(t){templates.get("about").then(function(e){t.$element().html(e())})}return{all:t}}();
