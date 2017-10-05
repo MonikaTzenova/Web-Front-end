@@ -1,0 +1,48 @@
+<section id="primary-content">
+    <div class="wrapper">
+    <h1 class="above"> Profile Page</h1>
+    <div id="medium">
+        <div class="form">
+            <div class="imgcontainer">
+                {{#if photoUrl}}
+                <img src="{{photoUrl}}" alt="userPhoto" class="avatar"> {{else}}
+                <img src="../images/Profile_avatar_placeholder.png" alt="userPhoto" class="avatar"> {{/if}}
+                <p><b>Username:</b> {{username}}</p>
+                <p><b>E-mail:</b> {{email}}</p>
+            </div>
+            <br>
+            {{#if movies}}
+            <h2>My Movies: </h2>
+            <ol>
+                {{#each movies}}
+                <li><b> {{title}}</b> - {{author}} </li>
+                {{/each}}
+            </ol>
+            {{else}}
+            <h2>You still don`t have any movies!</h2><br>
+            {{/if}}
+            {{#if posts}} 
+            <h2>My Comments: </h2>
+            <br>
+            <table>
+                <tr>
+                    <th>Comment movie</th>
+                    <th>Post content</th>
+                    <th>Published</th>
+                </tr>
+                {{#each posts}}
+                <tr>
+                    
+                    <td><a href="#/movies/id/{{movieId}}" id="{{movieId}}">{{movieTitle}} - {{movieAuthor}}</a></td>
+                    <td>{{message}}</td>
+                    <td>{{date}}</td>
+                </tr>
+                {{/each}}
+            </table>
+             {{else}}
+             <h2>You stil don`t have any comments!</h2>
+             {{/if}}
+        </div>
+    </div>
+    </div>
+</section>

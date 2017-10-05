@@ -1,0 +1,68 @@
+<section id="primary-content">
+    <div class="wrapper">
+        <h1 class="above">Movies</h1>
+        <div id="medium">
+            {{#each movies}}
+            <section id="medium-content">
+                <h1>{{title}} - {{producer}}</h1>
+                <select id="example{{id}}" class="example" review-id="{{id}}" data-rating="{{rating}}">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <img src="../images/border.png">
+                <address>Posted by {{postedBy}} on
+                    <time>{{date}}</time> in Some Category | 30 Comments</address>
+                <div id="p-1">
+                    <img id="box" src="{{image}}">
+                    <p>{{description}}</p>
+                    <a href="#/movies/id/{{id}}" id="{{id}}"><button class="btn">Read More</button></a>
+                </div>
+            </section>
+            {{/each}}
+            <img class="last-border" src="../images/border-right.png">
+            <aside>
+                <div>
+                    <h2>Recent Posts</h2>
+                    <div id="a-1">
+                        <p>Rhoncus quis, varius sed velit. Mauris quis nunc eu nunc molestie egestas et sit amet odio. Morbi
+                            lacinia velit in nibh sodales sed pharetra sem feugiat. Vivamus ut cursus augue. Integer sit
+                            amet arcu lorem, at egestas tellus. Phasellus tellus orci, congue at tristique at, mattis ut
+                            arcu.
+                        </p>
+                    </div>
+                </div>
+                <div>
+                    <h2 id="second-h2">Recent Posts</h2>
+                    <div id="a-2">
+                        <p>Rhoncus quis, varius sed velit. Mauris quis nunc eu nunc molestie egestas et sit amet odio. Morbi
+                            lacinia velit in nibh sodales sed pharetra sem feugiat. Vivamus ut cursus augue. Integer sit
+                            amet arcu lorem, at egestas tellus. Phasellus tellus orci, congue at tristique at, mattis ut
+                            arcu.
+                        </p>
+                    </div>
+                </div>
+            </aside>
+
+        </div> {{!--end medium--}} {{!--
+
+        <div id="pagination">
+            <p>Page {{currentPage}} of {{pagesLen}}</p>
+            {{#pages}} {{#isActive}}
+            <a id="btn-page" class="active" href="#/books/{{page}}">{{displayPage}}</a> {{else}}
+            <a id="btn-page" href="#/books/{{page}}">{{displayPage}}</a> {{/isActive}} {{/pages}}
+        </div> --}}
+
+        <div id="pagination">
+            <p>Page {{currentPage}} of {{pagesLen}}</p>
+            {{#pagination page pagesLen numberLinks}} {{!--{{#unless startFromFirstPage}}
+            <a href="#/books/{{page}}">&lt; Previous</a> {{/unless}}--}} {{#each pages}} {{#if isCurrent}}
+            <a id="btn-page" class="active" href="#/movies/{{page}}">{{display}}</a> {{/if}} {{#unless isCurrent}}
+            <a id="btn-page" href="#/movies/{{page}}">{{display}}</a> {{/unless}} {{/each}} {{!--{{#unless endAtLastPage}}
+            <a href="#/books/{{page}}">Next &gt;</a> {{/unless}}--}} {{/pagination}}
+        </div>
+
+    </div> {{!--end wrapper--}}
+</section>
