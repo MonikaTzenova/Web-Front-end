@@ -155,7 +155,7 @@ var moviesController = function () {
 
                             var refMovies = firebase.database().ref();
                             // Get a key for a new Book.
-                            var newMoviesKey = refBooks.push().key;
+                            var newMoviesKey = refMovies.push().key;
                             refMovies.child('movies/' + newMoviesKey).set({
                                 id: newMoviesKey,
                                 title: inputTitle,

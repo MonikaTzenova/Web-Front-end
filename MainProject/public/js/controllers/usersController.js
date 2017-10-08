@@ -1,1 +1,118 @@
-"use strict";var usersController=function(){function e(e){templates.get("login").then(function(t){e.$element().html(t());var n=document.getElementById("txtEmail"),o=document.getElementById("txtPassword"),i=document.getElementById("btnLogin");document.getElementById("btnSignUp"),document.getElementById("btnLogout");i.addEventListener("click",function(e){var t=n.value,i=o.value,l=firebase.auth(),u=l.signInWithEmailAndPassword(t,i);u.then(function(e){return toastr.success("User logged in!")}),u.catch(function(e){return toastr.error(e.message)})}),firebase.auth().onAuthStateChanged(function(t){t?(console.log("logged in"),e.redirect("#/"),$("#btnLogin").hide(),$("#link-login").hide(),$("#link-logout").show()):($("#btnLogout").hide(),$("#link-logout").hide(),console.log("not logged in"))})})}function t(e){templates.get("signup").then(function(t){e.$element().html(t());var n=document.getElementById("txtEmail"),o=document.getElementById("txtPassword"),i=(document.getElementById("btnLogin"),document.getElementById("btnSignUp")),l=(document.getElementById("btnLogout"),document.getElementById("uname"));i.addEventListener("click",function(e){var t=n.value,i=o.value,u=l.value,s=firebase.auth(),r=s.createUserWithEmailAndPassword(t,i);r.catch(function(e){return console.log(e.message)}),r.then(function(e){return console.log("registred")}),r.then(function(e){return toastr.success("User registred!")}),firebase.auth().onAuthStateChanged(function(e){if(e){console.log(u);firebase.database().ref().child("users/"+e.uid).set({username:u,email:t})}})})})}function n(e){document.getElementById("link-logout").addEventListener("click",function(t){firebase.auth().signOut(),toastr.success("Logged out"),e.redirect("#/login"),$("#btnLogin").show(),$("#link-logout").hide(),$("#link-login").show()})}function o(e){templates.get("profile").then(function(t){var n,o,i=firebase.auth().currentUser;if(null!=i){n=i.uid;firebase.database().ref("users").child(n).on("value",function(n){o=n.val(),console.log(o),console.log(o.username),e.$element().html(t(o))})}else toastr.info("You have to logged in!"),e.redirect("#/login")})}return{login:e,signup:t,logout:n,currentUser:o}}();
+var usersController = function() {
+    function login(context) {
+        templates.get('login')
+            .then(function(template) {
+                context.$element().html(template());
+
+                // Get Elemnets
+                const txtEmail = document.getElementById('txtEmail');
+                const txtPassword = document.getElementById('txtPassword');
+                const btnLogin = document.getElementById('btnLogin');
+                const btnSignUp = document.getElementById('btnSignUp');
+                const btnLogout = document.getElementById('btnLogout');
+
+                // add login event
+                btnLogin.addEventListener('click', e => {
+                    // Get email and pass
+                    const email = txtEmail.value;
+                    const pass = txtPassword.value;
+                    const auth = firebase.auth();
+                    // Sign in
+                    const promise = auth.signInWithEmailAndPassword(email, pass);
+                    promise.then(e => toastr.success('User logged in!'));
+                    promise.catch(e => toastr.error(e.message));
+                });
+                firebase.auth().onAuthStateChanged(firebaseUser => {
+                    if (firebaseUser) {
+                        console.log('logged in');
+                        context.redirect('#/');
+                        $('#btnLogin').hide();
+                        $('#link-login').hide();
+                        $('#link-logout').show();
+                    } else {
+                        $('#btnLogout').hide();
+                        $('#link-logout').hide();
+                        console.log('not logged in');
+                    }
+                });
+            });
+    }
+
+    function register(context) {
+        templates.get('signup')
+            .then(function(template) {
+                context.$element().html(template());
+
+                const txtEmail = document.getElementById('txtEmail');
+                const txtPassword = document.getElementById('txtPassword');
+                const btnLogin = document.getElementById('btnLogin');
+                const btnSignUp = document.getElementById('btnSignUp');
+                const btnLogout = document.getElementById('btnLogout');
+                const txtUsername = document.getElementById('uname');
+
+                btnSignUp.addEventListener('click', e => {
+                    var email = txtEmail.value;
+                    var pass = txtPassword.value;
+                    var username = txtUsername.value;
+                    var auth = firebase.auth();
+
+                    const promise = auth.createUserWithEmailAndPassword(email, pass);
+
+                    promise.catch(e => console.log(e.message));
+                    promise.then(e => console.log('registred'));
+                    promise.then(e => toastr.success('User registred!'));
+                    //Saving data
+                    firebase.auth().onAuthStateChanged(firebaseUser => {
+                        if (firebaseUser) {
+                            console.log(username);
+                            var refUser = firebase.database().ref();
+                            refUser.child('users/' + firebaseUser.uid).set({
+                                username: username,
+                                email: email
+                            });
+                        }
+                    });
+
+                });
+
+            });
+    }
+    function logout(context) {
+        const btnLogout = document.getElementById('link-logout');
+        btnLogout.addEventListener('click', e => {
+            firebase.auth().signOut();
+            toastr.success('Logged out');
+            context.redirect('#/login');
+
+            $('#btnLogin').show();
+            $('#link-logout').hide();
+            $('#link-login').show();
+        });
+
+    }
+    function currentUser(context) {
+        templates.get('profile')
+            .then(function(template) {
+                var user = firebase.auth().currentUser;
+                var uid, userData;
+                if (user != null) {
+                    uid = user.uid;
+                    var userRef = firebase.database().ref('users').child(uid);
+                    userRef.on('value', function(snapshot) {
+                        userData = snapshot.val();
+                        context.$element().html(template(userData));
+                    });
+                } else {
+                    toastr.info('You have to logged in!');
+                    context.redirect('#/login');
+                }
+            });
+    }
+
+    return {
+        login: login,
+        signup: register,
+        logout: logout,
+        currentUser: currentUser
+    };
+} ();
