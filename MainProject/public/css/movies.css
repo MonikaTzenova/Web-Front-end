@@ -97,7 +97,7 @@ width: inherit;
 }
 aside {
     height: 625px;
-display: inline-block;
+display: inline-block !important;
 position: absolute;
 top: 90px;
 }
@@ -151,13 +151,16 @@ aside h2 {
 }
 @media (max-width: 768px) {
     aside {
-    display: none;
+    display: none !important;
     }
     #medium {
     margin-left: 5%;
     }
 }
 @media (max-width: 480px) {
+    aside {
+        display: none !important;
+    }
     #medium {
      margin-left: 0; 
     }

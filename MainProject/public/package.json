@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Monika Tzenova",
   "license": "ISC",
   "devDependencies": {
     "babel-preset-es2015": "^6.24.0",

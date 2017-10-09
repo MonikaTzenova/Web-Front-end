@@ -25,13 +25,7 @@ var moviesController = function () {
                     }
 
                     data = data.slice(page * size, (page + 1) * size);
-                    // Handlebars.registerHelper('isActive', function (block) {
-                    //     if (this.page === page) {
-                    //         return block.fn(this);
-                    //     } else {
-                    //         return block.inverse(this);
-                    //     }
-                    // });
+
                     var numberLinks = 5;
                     Handlebars.registerHelper('pagination', function (currentPage, totalPage, size, options) {
                         var startPage, endPage, context, totalPage = totalPage - 1;
